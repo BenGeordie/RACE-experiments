@@ -35,6 +35,9 @@ std::vector<int> getPowers(){
 
 std::vector< std::pair<int, int> > clusteringExpMinHashStream(size_t n_hashes, int hash_power, size_t hash_range, std::ifstream& data, size_t n_samples_per_bucket, std::vector<int>& clusters, std::string& path, size_t dimensions, size_t total){
     
+    using namespace std::chrono;
+    std::vector<microseconds> latencies;
+    
     // reset stream
     data.clear();
     data.seekg(0, std::ios::beg);
@@ -59,6 +62,7 @@ std::vector< std::pair<int, int> > clusteringExpMinHashStream(size_t n_hashes, i
     
     int idx = 0;
     do{
+        auto start = high_resolution_clock::now();
         VectorFeaturesAdjacent(data, vec, label);
 //        std::cout << label << std::endl;
         if (vec.size() == 0)continue;
@@ -74,6 +78,9 @@ std::vector< std::pair<int, int> > clusteringExpMinHashStream(size_t n_hashes, i
         if(idx % 1000 == 0)
             std::cout << '.' << std::flush;
         idx++;
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<microseconds>(stop - start);
+        latencies.push_back(duration);
     }
     while(data);
     
@@ -84,15 +91,22 @@ std::vector< std::pair<int, int> > clusteringExpMinHashStream(size_t n_hashes, i
     //        output.push_back(std::make_pair(clus, elem));
     //    }
     reservoirs.pprint(std::cout, path);
+//    printList(latencies);
     return output;
 }
 
 // In the function below, the numbers printed in the console do not correspond to clusters, but instead to the read number in the fasta file (first read is labeled 0).
-std::vector< std::pair<int, int> > clusteringExpMinHashStreamMurmur(size_t n_hashes, int hash_power, size_t hash_range, std::ifstream& data, size_t n_samples_per_bucket, std::vector<int>& clusters, std::string& path, size_t dimensions, size_t total, int k){
+std::vector< std::pair<int, int> > clusteringExpMinHashStreamMurmur(size_t n_hashes, int hash_power, size_t hash_range, std::ifstream& data, std::ifstream& labelIn, size_t n_samples_per_bucket, std::vector<int>& clusters, std::string& path, size_t dimensions, size_t total, int k){
+    
+    using namespace std::chrono;
+    std::vector<microseconds> latencies;
     
     // reset stream
     data.clear();
     data.seekg(0, std::ios::beg);
+    
+    labelIn.clear();
+    labelIn.seekg(0, std::ios::beg);
     
     // input buffer for vector
     std::vector<int> vec;
@@ -114,21 +128,24 @@ std::vector< std::pair<int, int> > clusteringExpMinHashStreamMurmur(size_t n_has
     
     int idx = 0;
     do{
-        VectorFeaturesFastaMurmur(data, vec, k);
+        auto start = high_resolution_clock::now();
+        VectorFeaturesFastaMurmur(data, vec, labelIn, label, k);
         //        std::cout << label << std::endl;
         if (vec.size() == 0)continue;
         
         hash.getHash(vec, raw_hashes);
         rehash(raw_hashes, rehashes, n_hashes, hash_power);
         
-        // For the moment, we are adding the labels instead of the actual vector for ease of analysis.
+        
         labelvec.clear();
-        labelvec.push_back(idx);
-        //        labelvec.push_back(label);
+        labelvec.push_back(label);
         reservoirs.add(labelvec, rehashes);
         if(idx % 1000 == 0)
             std::cout << '.' << std::flush;
         idx++;
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<microseconds>(stop - start);
+        latencies.push_back(duration);
     }
     while(data);
     
@@ -139,6 +156,7 @@ std::vector< std::pair<int, int> > clusteringExpMinHashStreamMurmur(size_t n_has
     //        output.push_back(std::make_pair(clus, elem));
     //    }
     reservoirs.pprint(std::cout, path);
+    printList(latencies);
     return output;
 }
 

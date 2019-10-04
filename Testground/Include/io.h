@@ -7,6 +7,7 @@
 #include <vector>
 #include <math.h>
 #include "MurmurHash.h"
+#include "SignedRandomProjections.h"
 
 void VectorFeatures(std::istream& in, std::vector<double>& vec, int& label, size_t& dimensions); 
 /*
@@ -22,7 +23,9 @@ void kmerize(std::string sequence, std::vector<int>& vec, std::string alphabet, 
 
 void KmerizeMurmur(std::string sequence, std::vector<int>& vec, int k);
 
-void VectorFeaturesFastaMurmur(std::istream& in, std::vector<int>& vec, int& k);
+void KmerizeSquiggleSRP(std::vector<double> squiggle, std::vector<int>& vec, int dim, int K, int L);
+
+void VectorFeaturesFastaMurmur(std::istream& in, std::vector<int>& vec, std::istream& labelIn, double& label, int& k);
 
 void VectorFeaturesFasta(std::istream& in, std::vector<int>& vec, std::string& label, std::string& alphabet, int& k);
 
@@ -37,10 +40,14 @@ Writes the following:
 
 void printList(std::vector< double >& list);
 
+void printList(std::vector< std::chrono::microseconds >& list);
+
 std::vector<std::pair< std::vector<double>, int>> open_CSV(std::string path, int width);
 
 std::vector<std::pair< std::vector<double>, int>> open_sparse(std::string path, int smallest_id, int largest_id);
 
 std::string path_to_root();
+
+
 
 

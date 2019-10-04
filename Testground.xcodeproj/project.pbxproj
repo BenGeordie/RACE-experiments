@@ -16,6 +16,7 @@
 		59C8D4EA22959BB700FF7252 /* L2Hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59C8D4E322959BB700FF7252 /* L2Hash.cpp */; };
 		59C8D4EB22959BB700FF7252 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59C8D4E422959BB700FF7252 /* util.cpp */; };
 		59C8D4F02295D55500FF7252 /* MinHash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59C8D4EF2295D55500FF7252 /* MinHash.cpp */; };
+		59F7BBC72345032F00261090 /* SignedRandomProjections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59F7BBC52345032F00261090 /* SignedRandomProjections.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -50,6 +51,8 @@
 		59C8D4EE22959BE900FF7252 /* io.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = io.h; sourceTree = "<group>"; };
 		59C8D4EF2295D55500FF7252 /* MinHash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MinHash.cpp; sourceTree = "<group>"; };
 		59C8D4F12295D56200FF7252 /* MinHash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MinHash.h; sourceTree = "<group>"; };
+		59F7BBC42345031500261090 /* SignedRandomProjections.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignedRandomProjections.h; sourceTree = "<group>"; };
+		59F7BBC52345032F00261090 /* SignedRandomProjections.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SignedRandomProjections.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,12 +98,13 @@
 				59C8D4D72295933800FF7252 /* Debug.h */,
 				59C8D4D822959A9C00FF7252 /* RACE.h */,
 				59C8D4D922959AC700FF7252 /* driver.h */,
-				59C8D4DA22959AD500FF7252 /* L2Hash.h */,
 				59C8D4F12295D56200FF7252 /* MinHash.h */,
 				59C8D4DB22959AF100FF7252 /* reservoir.h */,
+				59C8D4DA22959AD500FF7252 /* L2Hash.h */,
 				59C8D4EE22959BE900FF7252 /* io.h */,
 				59C8D4EC22959BE900FF7252 /* MurmurHash.h */,
 				59C8D4ED22959BE900FF7252 /* util.h */,
+				59F7BBC42345031500261090 /* SignedRandomProjections.h */,
 			);
 			path = Include;
 			sourceTree = "<group>";
@@ -116,6 +120,7 @@
 				59C8D4E222959BB700FF7252 /* io.cpp */,
 				59C8D4DE22959BB700FF7252 /* MurmurHash.cpp */,
 				59C8D4E422959BB700FF7252 /* util.cpp */,
+				59F7BBC52345032F00261090 /* SignedRandomProjections.cpp */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -181,6 +186,7 @@
 				59C8D4EB22959BB700FF7252 /* util.cpp in Sources */,
 				59A8FF99228DD01000910C17 /* main.cpp in Sources */,
 				599002C32294AD4200EA7962 /* Debug.cpp in Sources */,
+				59F7BBC72345032F00261090 /* SignedRandomProjections.cpp in Sources */,
 				59C8D4E722959BB700FF7252 /* driver.cpp in Sources */,
 				59C8D4EA22959BB700FF7252 /* L2Hash.cpp in Sources */,
 				59C8D4E922959BB700FF7252 /* io.cpp in Sources */,
