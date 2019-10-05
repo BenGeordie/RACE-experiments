@@ -196,7 +196,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "169"
             endingLineNumber = "169"
-            landmarkName = "VectorFeaturesFastaMurmur(std::istream&amp; in, std::vector&lt;int&gt;&amp; vec, std::istream&amp; labelIn, double&amp; label, int&amp; k)"
+            landmarkName = "VectorFeaturesSquiggleCompiled(std::istream&amp; in, std::vector&lt;int&gt;&amp; vec, std::istream&amp; labelIn, double&amp; label, int&amp; dim, int K, int L)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>

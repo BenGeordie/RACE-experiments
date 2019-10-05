@@ -3,6 +3,18 @@
 #include <iostream>
 #include <exception>
 
+std::string exec(const char* cmd) {
+    std::array<char, 128> buffer;
+    std::string result;
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+    if (!pipe) {
+        throw std::runtime_error("popen() failed!");
+    }
+    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+        result += buffer.data();
+    }
+    return result;
+}
 
 void VectorFeatures(std::istream& in, std::vector<double>& vec, int& label, size_t& dimensions) {
 
@@ -96,7 +108,7 @@ void KmerizeMurmur(std::string sequence, std::vector<int>& vec, int k) {
 /*
  Takes a vector of squiggle signal. For each k-mer, hash it with a hash function (srp?). then add hash to vec.
  */
-void KmerizeSquiggleSRPSliding(std::vector<double> &squiggle, std::vector<int *>& vec, int dim, int K, int L) {
+void KmerizeSquiggleSRPSliding(std::vector<double> &squiggle, std::vector<int>& vec, int dim, int K, int L) {
     auto len = squiggle.size();
     // CHANGES I STILL NEED TO MAKE OR CONSIDER:
     // 1. REPLACE K AND L WITH SOMETHING ELSE?
@@ -121,14 +133,19 @@ void KmerizeSquiggleSRPSliding(std::vector<double> &squiggle, std::vector<int *>
             hashes = proj->getHash(toHash, dim);
         }
         //        std::cout<<sequence.substr(i, k)<<hash<<std::endl;
-        std::vector<int *>::iterator it = std::find(vec.begin(), vec.end(), hashes);
+        // Concatenate binary values in "hashes" array into a base-10 integer.
+        int hashConcat = 0;
+        for (int j = 0; j < K*L; ++j) {
+            hashConcat += hashes[j]*pow(2, j);
+        }
+        std::vector<int>::iterator it = std::find(vec.begin(), vec.end(), hashConcat);
         if (it == vec.end()) {
-            vec.push_back(hashes);
+            vec.push_back(hashConcat);
         }
     }
 }
 
-void KmerizeSquiggleSRPPartition(std::vector<double> &squiggle, std::vector<int *>& vec, int dim, int K, int L) {
+void KmerizeSquiggleSRPPartition(std::vector<double> &squiggle, std::vector<int>& vec, int dim, int K, int L) {
     auto len = squiggle.size();
     SignedRandomProjection *proj = new SignedRandomProjection(dim, K * L); // CHANGE – DONT KEEP AS K * L
     for(int i=0; i < len-dim+1; ++dim){
@@ -149,11 +166,51 @@ void KmerizeSquiggleSRPPartition(std::vector<double> &squiggle, std::vector<int 
             hashes = proj->getHash(toHash, dim);
         }
         //        std::cout<<sequence.substr(i, k)<<hash<<std::endl;
-        std::vector<int *>::iterator it = std::find(vec.begin(), vec.end(), hashes);
+        // Concatenate binary values in "hashes" array into a base-10 integer.
+        int hashConcat = 0;
+        for (int j = 0; j < K*L; ++j) {
+            hashConcat += hashes[j]*pow(2, j);
+        }
+        std::vector<int>::iterator it = std::find(vec.begin(), vec.end(), hashConcat);
         if (it == vec.end()) {
-            vec.push_back(hashes);
+            vec.push_back(hashConcat);
         }
     }
+}
+
+void VectorFeaturesSquiggleCompiled(std::istream& in, std::vector<int>& vec, std::istream& labelIn, double& label, int& dim, int K, int L) {
+    // Parsing the label line, extract cluster name, assign to the reference to label
+    vec.clear();
+    std::string temp;
+    std::getline(in, temp);
+    std::stringstream ssSquig(temp);
+    std::string labelTemp;
+    std::getline(labelIn, labelTemp); // each vector occupies a single line.
+    std::stringstream ss(labelTemp);
+    
+    double squig;
+    double element;
+    
+    // Pass label into "label"
+    ss >> element;
+    label = element;
+    labelTemp.clear();
+    
+    // Initialize squiggle vector to pass into kmerize
+    std::vector<double> squiggle;
+    
+    // Get current position
+    
+    while (ssSquig >> squig)
+    {
+        squiggle.push_back(squig);
+        if (ssSquig.peek() == ',')
+            ssSquig.ignore();
+    }
+    
+    temp.clear();
+    
+    KmerizeSquiggleSRPSliding(squiggle, vec, dim, K, L);
 }
 
 void VectorFeaturesFastaMurmur(std::istream& in, std::vector<int>& vec, std::istream& labelIn, double& label, int& k) {
@@ -161,7 +218,6 @@ void VectorFeaturesFastaMurmur(std::istream& in, std::vector<int>& vec, std::ist
     // Parsing the label line, extract cluster name, assign to the reference to label
     vec.clear();
     std::string temp;
-    std::getline(in, temp);
     std::string labelTemp;
     std::getline(labelIn, labelTemp); // each vector occupies a single line.
     std::stringstream ss(labelTemp);
