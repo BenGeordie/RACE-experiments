@@ -12,6 +12,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <dirent.h>
 
 #include <chrono>
 
@@ -35,18 +36,6 @@ struct ExperimentResult
     double query_time;
 };
 
-//ExperimentResult test_RACE(size_t n_hashes, size_t dimensions, int w, int hash_power, size_t hash_range, std::ifstream& data, std::ifstream& queries, std::vector<double>& estimates);
-
-std::vector<int> getWs();
-
-std::vector<int> getPowers();
-
-
-std::vector< std::pair<int, int> > clusteringExpMinHashStream(size_t n_hashes, int hash_power, size_t hash_range, std::ifstream& data, size_t n_samples_per_bucket, std::vector<int>& clusters, std::string& path, size_t dimensions, size_t total);
-
-// In the function below, the numbers printed in the console do not correspond to clusters, but instead to the read number in the fasta file (first read is labeled 0).
-std::vector< std::pair<int, int> > clusteringExpMinHashStreamMurmur(size_t n_hashes, int hash_power, size_t hash_range, std::ifstream& data, std::ifstream& labelIn, size_t n_samples_per_bucket, std::vector<int>& clusters, std::string& path, size_t dimensions, size_t total, int k);
-
 std::vector< std::pair<int, int> > clusteringExpMinHashStreamSquiggle(size_t n_hashes, int hash_power, size_t hash_range, std::ifstream& data, std::ifstream& labelIn, size_t n_samples_per_bucket, std::vector<int>& clusters, std::string& path, size_t dimensions, size_t total, int dim, int K);
 
-std::vector< std::pair<int, int> > RSExpStream(size_t n_hashes, std::ifstream& data, size_t n_samples, std::vector<int>& clusters, size_t dimensions, size_t total);
+std::vector< std::pair<int, int> > clusteringExpMinHashStreamSquiggle(size_t nHashes, size_t nPerBucket, size_t total, size_t minHashRange, int minHashPower, size_t minHashDim, int srpPower, int srpDim, const char* fast5Dir, std::string h5dumpPath, std::string h5lsPath, std::ifstream& labelIn, std::vector<int>& clusters, std::string& outputPath);
