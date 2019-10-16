@@ -23,9 +23,9 @@ void vectorFeaturesSquiggleCompiled(std::istream& in, std::vector<int>& vec, std
 
 void parseSignalDirectory(std::istringstream& cliOutput, std::string& path);
 
-void parseSquiggle(std::istringstream& cliOutput, std::vector<double>& vec, std::string& temp);
+void parseSquiggle(std::istringstream& cliOutput, std::vector<double>& squiggles, std::string& temp);
 
-void getSquiggleVector(std::string fileName, std::vector<double>& vec, std::string& h5lsPath, std::string& h5dumpPath);
+void getSquiggleVector(std::string fileName, std::vector<double>& squiggles, std::string& h5lsPath, std::string& h5dumpPath);
 
 void getLabel(std::istream& labelIn, double& label);
 

@@ -131,7 +131,7 @@ void parseSignalDirectory(std::istringstream& cliOutput, std::string& path) {
     }
 }
 
-void parseSquiggle(std::istringstream& cliOutput, std::vector<double>& vec, std::string& temp) {
+void parseSquiggle(std::istringstream& cliOutput, std::vector<double>& squiggles, std::string& temp) {
     while (std::getline(cliOutput, temp)) {
         // temp.size() > 3 is a condition because the empty line after the last squiggle signal is 3 characters long (for the tabs?)
         if (temp.find("DATA") == std::string::npos && temp.find("HDF5") == std::string::npos && temp.find("}") == std::string::npos && temp.size() > 3) {
@@ -140,13 +140,13 @@ void parseSquiggle(std::istringstream& cliOutput, std::vector<double>& vec, std:
             std::stringstream ss(temp);
             double squiggle = 0;
             ss >> squiggle;
-            vec.push_back(squiggle);
+            squiggles.push_back(squiggle);
         }
     }
 }
 
-void getSquiggleVector(std::string fileName, std::vector<double>& vec, std::string& h5lsPath, std::string& h5dumpPath) {
-    
+void getSquiggleVector(std::string fileName, std::vector<double>& squiggles, std::string& h5lsPath, std::string& h5dumpPath) {
+    squiggles.clear();
     std::string path;
     
     // First use h5ls to find what the signal directory path. Use parser to isolate this path from the other contents of the fast5 file.
@@ -160,12 +160,18 @@ void getSquiggleVector(std::string fileName, std::vector<double>& vec, std::stri
     cmdString = h5dumpPath + " -w 1 -y -d " + path + " " + fileName;
     cmd = cmdString.c_str();
     std::istringstream cliOutputPath(exec(cmd));
-    parseSquiggle(cliOutputPath, vec, path);
+    parseSquiggle(cliOutputPath, squiggles, path);
     cliOutputPath.clear();
 }
 
 void getLabel(std::istream& labelIn, double& label) {
-    
+    std::string temp;
+    std::getline(labelIn, temp); // each vector occupies a single line.
+    std::stringstream ss(temp);
+    double element;
+    ss >> element;
+    label = element;
+    temp.clear();
 }
 
 void writeCSVResults(std::ostream& out, size_t sketch_size, double preprocessing_time, double query_time, std::vector<double>& estimates){

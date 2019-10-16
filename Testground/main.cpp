@@ -34,16 +34,32 @@ int main(){
 ////        return output;
 //    }
     
-    // CODE TO GET RESULT OF CLI
-    
-    const char* cmd = "/Users/benitogeordie/anaconda3/bin/h5dump -w 1 -y -d /Raw/Reads/Read_10028/Signal /Users/benitogeordie/bg31/Research/gridion_single/0a3eaef6-5643-486e-b659-3e964adbd38f.fast5";
-    std::istringstream f(exec(cmd));
-    std::string temp;
-    std::vector<int> vec;
-    getSquiggleVector("/Users/benitogeordie/bg31/Research/gridion_single/0a3eaef6-5643-486e-b659-3e964adbd38f.fast5",
-                      vec, "/Users/benitogeordie/anaconda3/bin/h5ls", "/Users/benitogeordie/anaconda3/bin/h5dump");
-    printList(vec);
+//    // CODE TO GET RESULT OF CLI
+//
+//    const char* cmd = "/Users/benitogeordie/anaconda3/bin/h5dump -w 1 -y -d /Raw/Reads/Read_10028/Signal /Users/benitogeordie/bg31/Research/gridion_single/0a3eaef6-5643-486e-b659-3e964adbd38f.fast5";
+//    std::istringstream f(exec(cmd));
+//    std::string temp;
+//    std::vector<int> vec;
+//
+//    printList(vec);
 
+//size_t nHashes = 1;
+//size_t nPerBucket = 10;
+//size_t total =
+//size_t minHashRange
+//int minHashPower
+//size_t minHashDim
+//int srpPower
+//int srpDim
+//const char* fast5Dir
+//std::string h5dumpPath
+//std::string h5lsPath
+//std::ifstream& labelIn,
+//std::vector<int>& clusters
+//std::string& outputPath
+    
+//clusteringExpMinHashStreamSquiggle(size_t nHashes, size_t nPerBucket, size_t total, size_t minHashRange, int minHashPower, size_t minHashDim, int srpPower, int srpDim, const char* fast5Dir, std::string h5dumpPath, std::string h5lsPath, std::ifstream& labelIn, std::vector<int>& clusters, std::string& outputPath)
+    
 //    // RUN RACE
 //    // Vector containing names of ground truth clusters:  WAIT WHAT?
 //    std::vector<int> clusters;

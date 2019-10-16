@@ -26,60 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Testground/src/reservoir.cpp"
-            timestampString = "592118342.559507"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
-            landmarkName = "Reservoir::pprint(std::ostream&amp; out, int width, bool format, std::vector&lt;int&gt;&amp; clusters)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Testground/src/reservoir.cpp"
-            timestampString = "592118342.559574"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
-            landmarkName = "Reservoir::pprint(std::ostream&amp; out, int width, bool format, std::vector&lt;int&gt;&amp; clusters)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Testground/src/reservoir.cpp"
-            timestampString = "592118342.559622"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "Reservoir::add(std::vector&lt; double &gt; vec, int *hashes)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Testground/src/reservoir.cpp"
             timestampString = "592118342.559667"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "16"
             endingLineNumber = "16"
-            landmarkName = "Reservoir::Reservoir(size_t R, size_t range, size_t L, std::vector&lt;int&gt;&amp; clusters, size_t total)"
+            landmarkName = "Reservoir::Reservoir(size_t R, size_t range, size_t L, size_t total, const char* oldDir, std::string&amp; newDir)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -95,23 +47,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "17"
             endingLineNumber = "17"
-            landmarkName = "Reservoir::Reservoir(size_t R, size_t range, size_t L, std::vector&lt;int&gt;&amp; clusters, size_t total)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Testground/src/reservoir.cpp"
-            timestampString = "592118342.559751"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "Reservoir::Reservoir(size_t R, size_t range, size_t L, std::vector&lt;int&gt;&amp; clusters, size_t total)"
+            landmarkName = "Reservoir::Reservoir(size_t R, size_t range, size_t L, size_t total, const char* oldDir, std::string&amp; newDir)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -127,7 +63,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "29"
             endingLineNumber = "29"
-            landmarkName = "Reservoir::Reservoir(size_t R, size_t range, size_t L, std::vector&lt;int&gt;&amp; clusters, size_t total)"
+            landmarkName = "Reservoir::~Reservoir()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -150,22 +86,6 @@
                   offsetFromSymbolStart = "0">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Testground/src/reservoir.cpp"
-            timestampString = "592118342.559833"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
-            landmarkName = "Reservoir::Reservoir(size_t R, size_t range, size_t L, std::vector&lt;int&gt;&amp; clusters, size_t total)"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
