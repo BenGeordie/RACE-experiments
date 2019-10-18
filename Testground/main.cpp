@@ -55,7 +55,7 @@ int main(){
 //std::string h5dumpPath
 //std::string h5lsPath
 //std::ifstream& labelIn,
-//std::vector<int>& clusters
+//    std::vector<int> clusters;
 //std::string& outputPath
     
 //clusteringExpMinHashStreamSquiggle(size_t nHashes, size_t nPerBucket, size_t total, size_t minHashRange, int minHashPower, size_t minHashDim, int srpPower, int srpDim, const char* fast5Dir, std::string h5dumpPath, std::string h5lsPath, std::ifstream& labelIn, std::vector<int>& clusters, std::string& outputPath)
@@ -66,8 +66,9 @@ int main(){
 //    for(int i = 0; i < 1000; i++)
 //        clusters.push_back(i);
 //
-//    std::ifstream labelIn("/Users/benitogeordie/bg31/Research/Compression Project/promethion_kmeans_ground_truth.csv");
+    std::ifstream labelIn("/Users/benitogeordie/bg31/Research/Compression Project/promethion_kmeans_ground_truth.csv");
 //    std::ifstream in("/Users/benitogeordie/Downloads/vboza-deepnano-e8a621e17b9f/r9/promethion_basecalled.fasta");
+    const char* fast5Dir = "/Users/benitogeordie/bg31/Research/gridion_single";
 //    size_t n_hashes = 1;
 //    std::string pathRACE = "/Users/benitogeordie/bg31/Research/Compression Project/promethion_after_race_minhash.txt";
 //    std::string pathRS = "/Users/benitogeordie/bg31/Research/Compression Project/promethion_after_rs.txt";
@@ -83,6 +84,7 @@ int main(){
 //            }
 //        }
 //    }
+//    clusteringExpMinHashStreamSquiggle(3, 5, 500, 200, 4, 1024, 10, 1024, fast5Dir, std::string& destinationDir, std::string h5dumpPath, std::string h5lsPath, std::ifstream& labelIn, clusters, std::string& outputPath);
 
 }
 

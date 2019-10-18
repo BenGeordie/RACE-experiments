@@ -32,7 +32,6 @@ Reservoir::~Reservoir(){
     _labelSet.clear();
 }
 
-
 void Reservoir::add(int label, int *hashes, std::string fileName){
     /*
      Input: hashes = A set of R integer hash values, one hash value for each ACE
