@@ -196,7 +196,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "169"
             endingLineNumber = "169"
-            landmarkName = "VectorFeaturesSquiggleCompiled(std::istream&amp; in, std::vector&lt;int&gt;&amp; vec, std::istream&amp; labelIn, double&amp; label, int&amp; dim, int K, int L)"
+            landmarkName = "KmerizeSquiggleSRPPartition(std::vector&lt;double&gt; &amp;squiggle, std::vector&lt;int&gt;&amp; vec, int dim, int K, int L)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
