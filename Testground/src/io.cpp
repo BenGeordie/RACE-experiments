@@ -77,6 +77,7 @@ void kmerize(std::string sequence, std::vector<int>& vec, std::string alphabet, 
 void KmerizeMurmur(std::string sequence, std::vector<int>& vec, int k) {
 //    std::cout << sequence << std::endl;
     auto len = sequence.length();
+    #pragma omp parallel for
     for(int i=0; i < len-k+1; ++i){
         int hash;
         if (len < k) {
@@ -93,68 +94,25 @@ void KmerizeMurmur(std::string sequence, std::vector<int>& vec, int k) {
     }
 }
 
-/*
- Takes a vector of squiggle signal. For each k-mer, hash it with a hash function (srp?). then add hash to vec.
- */
-void KmerizeSquiggleSRPSliding(std::vector<double> &squiggle, std::vector<int *>& vec, int dim, int K, int L) {
-    auto len = squiggle.size();
-    // CHANGES I STILL NEED TO MAKE OR CONSIDER:
-    // 1. REPLACE K AND L WITH SOMETHING ELSE?
-    // 2. AM I FINE WITH THE VECTOR OF ARRAYS FORMAT FOR VEC, OR WOULD AN ARRAY OF VECTORS BE BETTER?
-    // SAME GOES FOR THE NEXT FUNCTION/METHOD
-    SignedRandomProjection *proj = new SignedRandomProjection(dim, K * L); // CHANGE – DONT KEEP AS K * L
-    for(int i=0; i < len-dim+1; ++i){
-        double *toHash = new double[dim];
-        int *hashes;
-        if (len < dim) {
-            for (int j = 0; j < len; ++j) {
-                toHash[j] = squiggle[i + j];
-            }
-            for (int j = len; j < dim; ++j) {
-                toHash[j] = 0; // could be changed from 0 to what?
-            }
-            hashes = proj->getHash(toHash, dim);
-        } else {
-            for (int j = 0; j < dim; ++j) {
-                toHash[j] = squiggle[i + j];
-            }
-            hashes = proj->getHash(toHash, dim);
-        }
-        //        std::cout<<sequence.substr(i, k)<<hash<<std::endl;
-        std::vector<int *>::iterator it = std::find(vec.begin(), vec.end(), hashes);
-        if (it == vec.end()) {
-            vec.push_back(hashes);
-        }
-    }
-}
-
-void KmerizeSquiggleSRPPartition(std::vector<double> &squiggle, std::vector<int *>& vec, int dim, int K, int L) {
-    auto len = squiggle.size();
-    SignedRandomProjection *proj = new SignedRandomProjection(dim, K * L); // CHANGE – DONT KEEP AS K * L
-    for(int i=0; i < len-dim+1; ++dim){
-        double *toHash = new double[dim];
-        int *hashes;
-        if (len < dim) {
-            for (int j = 0; j < len; ++j) {
-                toHash[j] = squiggle[i + j];
-            }
-            for (int j = len; j < dim; ++j) {
-                toHash[j] = 0; // could be changed from 0 to what?
-            }
-            hashes = proj->getHash(toHash, dim);
-        } else {
-            for (int j = 0; j < dim; ++j) {
-                toHash[j] = squiggle[i + j];
-            }
-            hashes = proj->getHash(toHash, dim);
-        }
-        //        std::cout<<sequence.substr(i, k)<<hash<<std::endl;
-        std::vector<int *>::iterator it = std::find(vec.begin(), vec.end(), hashes);
-        if (it == vec.end()) {
-            vec.push_back(hashes);
-        }
-    }
-}
+//TEST_CASE("KmerizeMurmur Works", "[kmerizemurmur]") {
+//    std::string sequence = "AAAAA";
+//    std::vector<int> vec;
+//    int k = 3;
+//    KmerizeMurmur(sequence, vec, k);
+//
+//    std::string sequence2 = "AAABA";
+//    std::vector<int> vec2;
+//    KmerizeMurmur(sequence2, vec2, k);
+//
+//    std::string kmer = "AAA";
+//    std::vector<int> ref;
+//    ref.push_back(MurmurHash(&kmer, (k + 1) * sizeof(char), k));
+//    
+//    REQUIRE(vec == ref);
+//    REQUIRE(vec != vec2);
+//    REQUIRE(std::find(vec2.begin(), vec2.end(), vec[0]) != 0);
+//    REQUIRE(vec2.size() == 3);
+//}
 
 void VectorFeaturesFastaMurmur(std::istream& in, std::vector<int>& vec, std::istream& labelIn, double& label, int& k) {
     
@@ -230,6 +188,15 @@ void WriteCSVResults(std::ostream& out, size_t sketch_size, double preprocessing
 }
 
 void printList(std::vector< double >& list){
+    std::cout << '[';
+    std::cout << list[0];
+    for(int i = 1; i < list.size(); i++){
+        std::cout << ", " << list[i];
+    }
+    std::cout << ']';
+}
+
+void printList(std::vector< int >& list){
     std::cout << '[';
     std::cout << list[0];
     for(int i = 1; i < list.size(); i++){

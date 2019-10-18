@@ -8,6 +8,7 @@
 #include <math.h>
 #include "MurmurHash.h"
 #include "SignedRandomProjections.h"
+#include "catch.hpp"
 
 void VectorFeatures(std::istream& in, std::vector<double>& vec, int& label, size_t& dimensions); 
 /*
@@ -39,6 +40,8 @@ Writes the following:
 */
 
 void printList(std::vector< double >& list);
+
+void printList(std::vector< int >& list);
 
 void printList(std::vector< std::chrono::microseconds >& list);
 

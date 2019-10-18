@@ -9,7 +9,7 @@ int* MinHash::getHash(std::vector<int>& vec){
     int *hashes = new int[_numhashes];
     unsigned int hashed_value;
     unsigned int minhashed_value;
-    // #pragma omp parallel for 
+    #pragma omp parallel for 
     for (int k=0; k < _numhashes; k++) {
 
         minhashed_value = std::numeric_limits<unsigned int>::max(); 

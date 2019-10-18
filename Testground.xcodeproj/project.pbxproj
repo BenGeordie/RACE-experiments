@@ -51,6 +51,7 @@
 		59C8D4EE22959BE900FF7252 /* io.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = io.h; sourceTree = "<group>"; };
 		59C8D4EF2295D55500FF7252 /* MinHash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MinHash.cpp; sourceTree = "<group>"; };
 		59C8D4F12295D56200FF7252 /* MinHash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MinHash.h; sourceTree = "<group>"; };
+		59F62A3B2359DCCD00A81B64 /* catch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = catch.hpp; sourceTree = "<group>"; };
 		59F7BBC42345031500261090 /* SignedRandomProjections.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignedRandomProjections.h; sourceTree = "<group>"; };
 		59F7BBC52345032F00261090 /* SignedRandomProjections.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SignedRandomProjections.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -95,6 +96,7 @@
 		59C8D4DC22959B0B00FF7252 /* Include */ = {
 			isa = PBXGroup;
 			children = (
+				59F62A3B2359DCCD00A81B64 /* catch.hpp */,
 				59C8D4D72295933800FF7252 /* Debug.h */,
 				59C8D4D822959A9C00FF7252 /* RACE.h */,
 				59C8D4D922959AC700FF7252 /* driver.h */,

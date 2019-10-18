@@ -2,12 +2,42 @@
 #include "io.h"
 #include "driver.h"
 #include <chrono>
+#include "Include/catch.hpp"
+
+#define CATCH_CONFIG_MAIN
 
 typedef int w;
 typedef int power;
 typedef int clusters;
 
 int main(){
+    
+    // TESTING IO
+    std::string sequence = "AAAAA";
+    std::vector<int> vec;
+    int k = 3;
+    KmerizeMurmur(sequence, vec, k);
+    
+    std::string sequence2 = "AAABA";
+    std::vector<int> vec2;
+    KmerizeMurmur(sequence2, vec2, k);
+    
+
+
+    std::string kmer = "AAA";
+    std::vector<int> ref;
+    ref.push_back(MurmurHash(&kmer, (k + 1) * sizeof(char), k));
+    std::cout << "vec contents" << std::endl;
+    std::copy(vec.begin(), vec.end(), std::ostream_iterator<int>(std::cout, " "));
+    std::cout << std::endl;
+    std::cout << "vec2 contents" << std::endl;
+    std::copy(vec2.begin(), vec2.end(), std::ostream_iterator<int>(std::cout, " "));
+    std::cout << std::endl;
+    std::cout << "ref contents" << std::endl;
+    std::copy(ref.begin(), ref.end(), std::ostream_iterator<int>(std::cout, " "));
+    std::cout << std::endl;
+    
+    
     
     // Vector containing names of ground truth clusters:
     std::vector<int> clusters;
