@@ -32,6 +32,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		590272362359D03F006E0457 /* catch.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = catch.hpp; sourceTree = "<group>"; };
 		599002C22294AD4200EA7962 /* Debug.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Debug.cpp; sourceTree = "<group>"; };
 		59A8FF95228DD01000910C17 /* Testground */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Testground; sourceTree = BUILT_PRODUCTS_DIR; };
 		59A8FF98228DD01000910C17 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -95,6 +96,7 @@
 		59C8D4DC22959B0B00FF7252 /* Include */ = {
 			isa = PBXGroup;
 			children = (
+				590272362359D03F006E0457 /* catch.hpp */,
 				59C8D4D72295933800FF7252 /* Debug.h */,
 				59C8D4D822959A9C00FF7252 /* RACE.h */,
 				59C8D4D922959AC700FF7252 /* driver.h */,

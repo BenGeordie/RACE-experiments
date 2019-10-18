@@ -3,19 +3,6 @@
 #include <iostream>
 #include <exception>
 
-std::string exec(const char* cmd) {
-    std::array<char, 128> buffer;
-    std::string result;
-    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
-    if (!pipe) {
-        throw std::runtime_error("popen() failed!");
-    }
-    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
-        result += buffer.data();
-    }
-    return result;
-}
-
 void VectorFeatures(std::istream& in, std::vector<double>& vec, int& label, size_t& dimensions) {
 
     std::string line;
@@ -89,6 +76,7 @@ void kmerize(std::string sequence, std::vector<int>& vec, std::string alphabet, 
 void KmerizeMurmur(std::string sequence, std::vector<int>& vec, int k) {
 //    std::cout << sequence << std::endl;
     auto len = sequence.length();
+    #pragma omp parallel for
     for(int i=0; i < len-k+1; ++i){
         int hash;
         if (len < k) {
