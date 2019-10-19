@@ -3,7 +3,6 @@
 #include <iostream>
 #include <exception>
 
-
 void VectorFeatures(std::istream& in, std::vector<double>& vec, int& label, size_t& dimensions) {
 
     std::string line;
@@ -88,6 +87,79 @@ void KmerizeMurmur(std::string sequence, std::vector<int>& vec, int k) {
         }
 //        std::cout<<sequence.substr(i, k)<<hash<<std::endl;
         std::vector<int>::iterator it = std::find(vec.begin(), vec.end(), hash);
+        if (it == vec.end()) {
+            vec.push_back(hash);
+        }
+    }
+}
+
+/*
+ Takes a vector of squiggle signal. For each k-mer, hash it with a hash function (srp?). then add hash to vec.
+ */
+void KmerizeSquiggleSRPSliding(std::vector<double> &squiggle, std::vector<int>& vec, int dim, int K, int L) {
+    auto len = squiggle.size();
+    // CHANGES I STILL NEED TO MAKE OR CONSIDER:
+    // 1. REPLACE K AND L WITH SOMETHING ELSE?
+    // 2. AM I FINE WITH THE VECTOR OF ARRAYS FORMAT FOR VEC, OR WOULD AN ARRAY OF VECTORS BE BETTER?
+    // SAME GOES FOR THE NEXT FUNCTION/METHOD
+    SignedRandomProjection *proj = new SignedRandomProjection(dim, K * L); // CHANGE – DONT KEEP AS K * L
+    for(int i=0; i < len-dim+1; ++i){
+        double *toHash = new double[dim];
+        int *hashes;
+        if (len < dim) {
+            for (int j = 0; j < len; ++j) {
+                toHash[j] = squiggle[i + j];
+            }
+            for (int j = len; j < dim; ++j) {
+                toHash[j] = 0; // could be changed from 0 to what?
+            }
+            hashes = proj->getHash(toHash, dim);
+        } else {
+            for (int j = 0; j < dim; ++j) {
+                toHash[j] = squiggle[i + j];
+            }
+            hashes = proj->getHash(toHash, dim);
+        }
+        //        std::cout<<sequence.substr(i, k)<<hash<<std::endl;
+        // Concatenate binary values in "hashes" array into a base-10 integer.
+        int hashConcat = 0;
+        for (int j = 0; j < K*L; ++j) {
+            hashConcat += hashes[j]*pow(2, j);
+        }
+        std::vector<int>::iterator it = std::find(vec.begin(), vec.end(), hashConcat);
+        if (it == vec.end()) {
+            vec.push_back(hashConcat);
+        }
+    }
+}
+
+void KmerizeSquiggleSRPPartition(std::vector<double> &squiggle, std::vector<int>& vec, int dim, int K, int L) {
+    auto len = squiggle.size();
+    SignedRandomProjection *proj = new SignedRandomProjection(dim, K * L); // CHANGE – DONT KEEP AS K * L
+    for(int i=0; i < len-dim+1; ++dim){
+        double *toHash = new double[dim];
+        int *hashes;
+        if (len < dim) {
+            for (int j = 0; j < len; ++j) {
+                toHash[j] = squiggle[i + j];
+            }
+            for (int j = len; j < dim; ++j) {
+                toHash[j] = 0; // could be changed from 0 to what?
+            }
+            hashes = proj->getHash(toHash, dim);
+        } else {
+            for (int j = 0; j < dim; ++j) {
+                toHash[j] = squiggle[i + j];
+            }
+            hashes = proj->getHash(toHash, dim);
+        }
+        //        std::cout<<sequence.substr(i, k)<<hash<<std::endl;
+        // Concatenate binary values in "hashes" array into a base-10 integer.
+        int hashConcat = 0;
+        for (int j = 0; j < K*L; ++j) {
+            hashConcat += hashes[j]*pow(2, j);
+        }
+        std::vector<int>::iterator it = std::find(vec.begin(), vec.end(), hashConcat);
         if (it == vec.end()) {
             vec.push_back(hash);
         }

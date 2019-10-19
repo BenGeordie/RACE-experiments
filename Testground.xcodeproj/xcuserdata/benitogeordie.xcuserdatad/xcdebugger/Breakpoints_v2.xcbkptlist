@@ -79,7 +79,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "16"
             endingLineNumber = "16"
-            landmarkName = "Reservoir::Reservoir(size_t R, size_t range, size_t L, std::vector&lt;int&gt;&amp; clusters, size_t total)"
+            landmarkName = "Reservoir::Reservoir(size_t R, size_t range, size_t L, size_t total, const char* oldDir, std::string&amp; newDir)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -127,7 +127,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "29"
             endingLineNumber = "29"
-            landmarkName = "Reservoir::Reservoir(size_t R, size_t range, size_t L, std::vector&lt;int&gt;&amp; clusters, size_t total)"
+            landmarkName = "Reservoir::~Reservoir()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

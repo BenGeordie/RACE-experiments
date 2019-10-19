@@ -10,7 +10,9 @@
 #include "SignedRandomProjections.h"
 #include "catch.hpp"
 
-void VectorFeatures(std::istream& in, std::vector<double>& vec, int& label, size_t& dimensions); 
+std::string exec(const char* cmd);
+
+void VectorFeatures(std::istream& in, std::vector<double>& vec, int& label, size_t& dimensions);
 /*
 Reads a CSV-coded set
 element0, element1, element2, ... elementN
@@ -24,7 +26,11 @@ void kmerize(std::string sequence, std::vector<int>& vec, std::string alphabet, 
 
 void KmerizeMurmur(std::string sequence, std::vector<int>& vec, int k);
 
-void KmerizeSquiggleSRP(std::vector<double> squiggle, std::vector<int>& vec, int dim, int K, int L);
+void KmerizeSquiggleSRPSliding(std::vector<double> &squiggle, std::vector<int>& vec, int dim, int K, int L);
+
+void KmerizeSquiggleSRPPartition(std::vector<double> &squiggle, std::vector<int>& vec, int dim, int K, int L);
+
+void VectorFeaturesSquiggleCompiled(std::istream& in, std::vector<int>& vec, std::istream& labelIn, double& label, int& dim, int K, int L);
 
 void VectorFeaturesFastaMurmur(std::istream& in, std::vector<int>& vec, std::istream& labelIn, double& label, int& k);
 

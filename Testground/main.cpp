@@ -1,6 +1,7 @@
 #include "Debug.h"
 #include "io.h"
 #include "driver.h"
+#include <dirent.h>
 #include <chrono>
 #include "Include/catch.hpp"
 
@@ -52,7 +53,7 @@ int main(){
     std::string pathRACE = "/Users/benitogeordie/bg31/Research/Compression\ Project/promethion_after_race_minhash.txt";
     std::string pathRS = "/Users/benitogeordie/bg31/Research/Compression\ Project/promethion_after_rs.txt";
     //    std::cout << "RS:" << std::endl;
-    for(size_t samples = 400; samples < 500; samples += 100){
+//    for(size_t samples = 400; samples < 500; samples += 100){
 //        clusteringExpMinHashStreamMurmur(n_hashes, 1, 1, in, labelIn, samples, clusters, pathRS, 1024, 3600, 5);
         clusteringExpMinHashStream(n_hashes, 1, 1, labelIn, samples, clusters, pathRS, 1024, 3600);
     }
