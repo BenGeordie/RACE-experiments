@@ -161,7 +161,7 @@ void KmerizeSquiggleSRPPartition(std::vector<double> &squiggle, std::vector<int>
         }
         std::vector<int>::iterator it = std::find(vec.begin(), vec.end(), hashConcat);
         if (it == vec.end()) {
-            vec.push_back(hash);
+            vec.push_back(hashConcat);
         }
     }
 }
