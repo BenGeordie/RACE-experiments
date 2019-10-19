@@ -157,6 +157,8 @@ void Reservoir::pprint(std::ostream& out, std::string& path){
             for(int i=1; i < _buckets[r*(_range+1) + ran].size(); ++i){
 //                std::cout << _buckets[r*(_range+1) + ran][i][0] << ", ";
                 setOfSequences.insert(_buckets[r*(_range+1) + ran][i]);
+                std::copy(_buckets[r*(_range+1) + ran][i].begin(), _buckets[r*(_range+1) + ran][i].end(),
+                          std::ostream_iterator<double>(std::cout, ", "));
             }
         }
 //        std::cout << "\n-------------------------\n";
