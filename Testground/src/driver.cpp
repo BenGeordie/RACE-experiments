@@ -72,7 +72,8 @@ std::vector< std::pair<int, int> > clusteringExpMinHashStream(size_t n_hashes, i
         
         // For the moment, we are adding the labels instead of the actual vector for ease of analysis.
         labelvec.clear();
-        labelvec.push_back(label);
+        labelvec.push_back(label); 
+        labelvec.push_back((double) idx);
         //        labelvec.push_back(label);
         reservoirs.add(labelvec, rehashes);
         if(idx % 1000 == 0)

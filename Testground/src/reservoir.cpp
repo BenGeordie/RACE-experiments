@@ -145,7 +145,7 @@ void Reservoir::pprint(std::ostream& out, std::string& path){
     std::ofstream out_data(path);
     std::vector<int> clusterCountArrayForGraph;
     std::vector<int> elemCountArrayForGraph;
-    std::set<std::vector<double>> setOfSequences;
+    std::set<double> setOfSequences;
     double average_clusters = 0;
     double average_elements = 0;
     for(size_t r = 0; r < _R; ++r){
@@ -156,7 +156,8 @@ void Reservoir::pprint(std::ostream& out, std::string& path){
 //            std::cout << ran << '\n';
             for(int i=1; i < _buckets[r*(_range+1) + ran].size(); ++i){
 //                std::cout << _buckets[r*(_range+1) + ran][i][0] << ", ";
-                setOfSequences.insert(_buckets[r*(_range+1) + ran][i]);
+                setOfSequences.insert(_buckets[r*(_range+1) + ran][i][0]);
+                std::cout << _buckets[r*(_range+1) + ran][i][1] << ", ";
             }
         }
 //        std::cout << "\n-------------------------\n";
