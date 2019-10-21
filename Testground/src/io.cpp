@@ -186,12 +186,14 @@ void KmerizeSquiggleSRPPartition(std::vector<double> &squiggle, std::vector<int>
 //    REQUIRE(vec2.size() == 3);
 //}
 
-void VectorFeaturesFastaMurmur(std::istream& in, std::vector<int>& vec, std::istream& labelIn, double& label, int& k) {
+void VectorFeaturesFastaMurmur(std::istream& in, std::vector<int>& vec, std::istream& labelIn, double& label, int& k, std::string& fastaEntry) {
     
     // Parsing the label line, extract cluster name, assign to the reference to label
+    fastaEntry.clear();
     vec.clear();
     std::string temp;
     std::getline(in, temp);
+    fastaEntry = fastaEntry + temp + '\n'; // Add label line in Fasta file to fastaEntry
     std::string labelTemp;
     std::getline(labelIn, labelTemp); // each vector occupies a single line.
     std::stringstream ss(labelTemp);
@@ -211,7 +213,10 @@ void VectorFeaturesFastaMurmur(std::istream& in, std::vector<int>& vec, std::ist
         //        std::cout << "peek" << in.peek() << std::endl;
         std::getline(in, temp); // each vector occupies a single line.
         sequence += temp;
+        fastaEntry += temp;
     }
+    
+    fastaEntry += '\n';
     
     //    std::cout << sequence << std::endl;
     
@@ -219,7 +224,7 @@ void VectorFeaturesFastaMurmur(std::istream& in, std::vector<int>& vec, std::ist
 }
 
 void VectorFeaturesFasta(std::istream& in, std::vector<int>& vec, std::string& label, std::string& alphabet, int& k) {
-    
+    // NEED TO MODIFY TO TAKE IN FASTA ENTRY
     // Parsing the label line, extract cluster name, assign to the reference to label
     vec.clear();
     std::getline(in, label);

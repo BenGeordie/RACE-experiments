@@ -33,14 +33,80 @@ std::vector<int> getPowers(){
     return Powers;
 }
 
-std::vector< std::pair<int, int> > clusteringExpMinHashStream(size_t n_hashes, int hash_power, size_t hash_range, std::ifstream& data, size_t n_samples_per_bucket, std::vector<int>& clusters, std::string& path, size_t dimensions, size_t total){
+//std::vector< std::pair<int, int> > clusteringExpMinHashStream(size_t n_hashes, int hash_power, size_t hash_range, std::ifstream& data, size_t n_samples_per_bucket, std::vector<int>& clusters, std::string& path, size_t dimensions, size_t total){
+//
+//    using namespace std::chrono;
+//    std::vector<microseconds> latencies;
+//
+//    // reset stream
+//    data.clear();
+//    data.seekg(0, std::ios::beg);
+//
+//    // input buffer for vector
+//    std::vector<int> vec;
+//    // input buffer for label
+//    double label;
+//    std::vector<double> labelvec;
+//
+//    // output  vector
+//    std::vector< std::pair<int, int> > output;
+//
+//    // Initialize reservoirs (R reservoirs of hash_power buckets,
+//    // each containing n_samples samples, each of them a vector)
+//    Reservoir reservoirs(n_hashes, hash_range, n_samples_per_bucket, clusters, total);
+//
+//    // Initialize hash tables
+//    MinHash hash = MinHash(dimensions, n_hashes*hash_power);
+//    int* raw_hashes = new int[n_hashes*hash_power];
+//    int* rehashes = new int[n_hashes];
+//
+//    int idx = 0;
+//    do{
+//        auto start = high_resolution_clock::now();
+//        VectorFeaturesAdjacent(data, vec, label);
+////        std::cout << label << std::endl;
+//        if (vec.size() == 0)continue;
+//
+//        hash.getHash(vec,raw_hashes);
+//        rehash(raw_hashes, rehashes, n_hashes, hash_power);
+//
+//        // For the moment, we are adding the labels instead of the actual vector for ease of analysis.
+//        labelvec.clear();
+//        labelvec.push_back((double) idx); // INITIALLY PUSH_BACK(LABEL) BUT CHANGED TO IDX TO HAVE LINE NUMBERS IN RESERVOIRs
+//        //        labelvec.push_back(label);
+//        reservoirs.add(labelvec, rehashes);
+//        if(idx % 1000 == 0)
+//            std::cout << '.' << std::flush;
+//        idx++;
+//        auto stop = high_resolution_clock::now();
+//        auto duration = duration_cast<microseconds>(stop - start);
+//        latencies.push_back(duration);
+//    }
+//    while(data);
+//
+//    //    for(size_t r = 0; r < n_hashes; r++){
+//    //        int clus = reservoirs.countLabels(r); // Haven't adapted to MinHash format
+//    //        //        std::cout << "clus : " << clus << std::endl << std::flush;
+//    //        int elem = reservoirs.countElements(r);
+//    //        output.push_back(std::make_pair(clus, elem));
+//    //    }
+//    reservoirs.pprint(std::cout, path);
+////    printList(latencies);
+//    return output;
+//}
+
+// In the function below, the numbers printed in the console do not correspond to clusters, but instead to the read number in the fasta file (first read is labeled 0).
+std::vector< std::pair<int, int> > clusteringExpMinHashStreamMurmur(size_t n_hashes, int hash_power, size_t hash_range, std::ifstream& data, std::ifstream& labelIn, size_t n_samples_per_bucket, std::vector<int>& clusters, std::string& path, size_t dimensions, size_t total, int k){
     
     using namespace std::chrono;
-    std::vector<microseconds> latencies;
+//    std::vector<microseconds> latencies;
     
     // reset stream
     data.clear();
     data.seekg(0, std::ios::beg);
+    
+    labelIn.clear();
+    labelIn.seekg(0, std::ios::beg);
     
     // input buffer for vector
     std::vector<int> vec;
@@ -51,36 +117,43 @@ std::vector< std::pair<int, int> > clusteringExpMinHashStream(size_t n_hashes, i
     // output  vector
     std::vector< std::pair<int, int> > output;
     
+    // fasta entry. String passed by reference and reused
+    std::string fastaEntry;
+    
     // Initialize reservoirs (R reservoirs of hash_power buckets,
     // each containing n_samples samples, each of them a vector)
-    Reservoir reservoirs(n_hashes, hash_range, n_samples_per_bucket, clusters, total);
+    Reservoir reservoirs(n_hashes, hash_range, n_samples_per_bucket, total);
     
     // Initialize hash tables
     MinHash hash = MinHash(dimensions, n_hashes*hash_power);
     int* raw_hashes = new int[n_hashes*hash_power];
     int* rehashes = new int[n_hashes];
     
+    // Initialize outputFasta
+    std::ofstream outputFasta(path);
+    
     int idx = 0;
     do{
-        auto start = high_resolution_clock::now();
-        VectorFeaturesAdjacent(data, vec, label);
-//        std::cout << label << std::endl;
+//        auto start = high_resolution_clock::now();
+        VectorFeaturesFastaMurmur(data, vec, labelIn, label, k, fastaEntry);
+        //        std::cout << label << std::endl;
         if (vec.size() == 0)continue;
         
-        hash.getHash(vec,raw_hashes);
+        hash.getHash(vec, raw_hashes);
         rehash(raw_hashes, rehashes, n_hashes, hash_power);
         
-        // For the moment, we are adding the labels instead of the actual vector for ease of analysis.
+        
+        
+        
         labelvec.clear();
-        labelvec.push_back((double) idx); // INITIALLY PUSH_BACK(LABEL) BUT CHANGED TO IDX TO HAVE LINE NUMBERS IN RESERVOIRs
-        //        labelvec.push_back(label);
-        reservoirs.add(labelvec, rehashes);
+        labelvec.push_back(label);
+        reservoirs.add((int) label, rehashes, fastaEntry, outputFasta);
         if(idx % 1000 == 0)
             std::cout << '.' << std::flush;
         idx++;
-        auto stop = high_resolution_clock::now();
-        auto duration = duration_cast<microseconds>(stop - start);
-        latencies.push_back(duration);
+//        auto stop = high_resolution_clock::now();
+//        auto duration = duration_cast<microseconds>(stop - start);
+//        latencies.push_back(duration);
     }
     while(data);
     
@@ -95,176 +168,47 @@ std::vector< std::pair<int, int> > clusteringExpMinHashStream(size_t n_hashes, i
     return output;
 }
 
-// In the function below, the numbers printed in the console do not correspond to clusters, but instead to the read number in the fasta file (first read is labeled 0).
-std::vector< std::pair<int, int> > clusteringExpMinHashStreamMurmur(size_t n_hashes, int hash_power, size_t hash_range, std::ifstream& data, std::ifstream& labelIn, size_t n_samples_per_bucket, std::vector<int>& clusters, std::string& path, size_t dimensions, size_t total, int k){
-    
-    using namespace std::chrono;
-    std::vector<microseconds> latencies;
-    
-    // reset stream
-    data.clear();
-    data.seekg(0, std::ios::beg);
-    
-    labelIn.clear();
-    labelIn.seekg(0, std::ios::beg);
-    
-    // input buffer for vector
-    std::vector<int> vec;
-    // input buffer for label
-    double label;
-    std::vector<double> labelvec;
-    
-    // output  vector
-    std::vector< std::pair<int, int> > output;
-    
-    // Initialize reservoirs (R reservoirs of hash_power buckets,
-    // each containing n_samples samples, each of them a vector)
-    Reservoir reservoirs(n_hashes, hash_range, n_samples_per_bucket, clusters, total);
-    
-    // Initialize hash tables
-    MinHash hash = MinHash(dimensions, n_hashes*hash_power);
-    int* raw_hashes = new int[n_hashes*hash_power];
-    int* rehashes = new int[n_hashes];
-    
-    int idx = 0;
-    do{
-        auto start = high_resolution_clock::now();
-        VectorFeaturesFastaMurmur(data, vec, labelIn, label, k);
-        //        std::cout << label << std::endl;
-        if (vec.size() == 0)continue;
-        
-        hash.getHash(vec, raw_hashes);
-        rehash(raw_hashes, rehashes, n_hashes, hash_power);
-        
-        
-        labelvec.clear();
-        labelvec.push_back(label);
-        reservoirs.add(labelvec, rehashes);
-        if(idx % 1000 == 0)
-            std::cout << '.' << std::flush;
-        idx++;
-        auto stop = high_resolution_clock::now();
-        auto duration = duration_cast<microseconds>(stop - start);
-        latencies.push_back(duration);
-    }
-    while(data);
-    
-    //    for(size_t r = 0; r < n_hashes; r++){
-    //        int clus = reservoirs.countLabels(r); // Haven't adapted to MinHash format
-    //        //        std::cout << "clus : " << clus << std::endl << std::flush;
-    //        int elem = reservoirs.countElements(r);
-    //        output.push_back(std::make_pair(clus, elem));
-    //    }
-    reservoirs.pprint(std::cout, path);
-    printList(latencies);
-    return output;
-}
-
-std::vector< std::pair<int, int> > clusteringExpMinHashStreamSquiggle(size_t n_hashes, int hash_power, size_t hash_range, std::ifstream& data, std::ifstream& labelIn, size_t n_samples_per_bucket, std::vector<int>& clusters, std::string& path, size_t dimensions, size_t total, int dim, int K){
-    
-    using namespace std::chrono;
-    std::vector<microseconds> latencies;
-    
-    // reset stream
-    data.clear();
-    data.seekg(0, std::ios::beg);
-    
-    labelIn.clear();
-    labelIn.seekg(0, std::ios::beg);
-    
-    // input buffer for vector
-    std::vector<int> vec;
-    // input buffer for label
-    double label;
-    std::vector<double> labelvec;
-    
-    // output  vector
-    std::vector< std::pair<int, int> > output;
-    
-    // Initialize reservoirs (R reservoirs of hash_power buckets,
-    // each containing n_samples samples, each of them a vector)
-    Reservoir reservoirs(n_hashes, hash_range, n_samples_per_bucket, clusters, total);
-    
-    // Initialize hash tables
-    MinHash hash = MinHash(dimensions, n_hashes*hash_power);
-    int* raw_hashes = new int[n_hashes*hash_power];
-    int* rehashes = new int[n_hashes];
-    
-    int idx = 0;
-    do{
-        auto start = high_resolution_clock::now();
-        VectorFeaturesSquiggleCompiled(data, vec, labelIn, label, dim, K, 1);
-        //        std::cout << label << std::endl;
-        if (vec.size() == 0)continue;
-        
-        hash.getHash(vec, raw_hashes);
-        rehash(raw_hashes, rehashes, n_hashes, hash_power);
-        
-        
-        labelvec.clear();
-        labelvec.push_back(label);
-        reservoirs.add(labelvec, rehashes);
-        if(idx % 1000 == 0)
-            std::cout << '.' << std::flush;
-        idx++;
-        auto stop = high_resolution_clock::now();
-        auto duration = duration_cast<microseconds>(stop - start);
-        latencies.push_back(duration);
-    }
-    while(data);
-    
-    //    for(size_t r = 0; r < n_hashes; r++){
-    //        int clus = reservoirs.countLabels(r); // Haven't adapted to MinHash format
-    //        //        std::cout << "clus : " << clus << std::endl << std::flush;
-    //        int elem = reservoirs.countElements(r);
-    //        output.push_back(std::make_pair(clus, elem));
-    //    }
-    reservoirs.pprint(std::cout, path);
-    printList(latencies);
-    return output;
-}
-
-std::vector< std::pair<int, int> > RSExpStream(size_t n_hashes, std::ifstream& data, size_t n_samples, std::vector<int>& clusters, size_t dimensions, size_t total){
-    // reset stream
-    data.clear();
-    data.seekg(0, std::ios::beg);
-    
-    // input buffer for vector
-    std::vector<double> vec;
-    // input buffer for label
-    int label;
-    std::vector<double> labelvec;
-    
-    // output  vector
-    std::vector< std::pair<int, int> > output;
-    
-    // Initialize reservoirs (R reservoirs of hash_power buckets,
-    // each containing n_samples samples, each of them a vector)
-    Reservoir reservoirs(n_hashes, 1, n_samples, clusters, total);
-    
-    int idx = 0;
-    do{
-        VectorFeatures(data, vec, label, dimensions); //VectorFeatures?
-        if (vec.size() == 0)continue;
-        
-        // We are adding the labels instead of the actual vector for ease of analysis.
-        labelvec.clear();
-        labelvec.push_back(label);
-        int* fake_hash = new int[n_hashes];
-        for(size_t r = 0; r < n_hashes; r++)
-            fake_hash[r] = 1;
-        reservoirs.add(labelvec, fake_hash);
-        idx++;
-    }
-    while(data);
-    
-    for(size_t r = 0; r < n_hashes; r++){
-        int clus = reservoirs.countLabels(r);
-        int elem = reservoirs.countElements(r);
-        output.push_back(std::make_pair(clus, elem));
-    }
-//    reservoirs.pprint(std::cout, 3, true, clusters);
-    return output;
-}
-
-
+//std::vector< std::pair<int, int> > RSExpStream(size_t n_hashes, std::ifstream& data, size_t n_samples, std::vector<int>& clusters, size_t dimensions, size_t total){
+//    // reset stream
+//    data.clear();
+//    data.seekg(0, std::ios::beg);
+//
+//    // input buffer for vector
+//    std::vector<double> vec;
+//    // input buffer for label
+//    int label;
+//    std::vector<double> labelvec;
+//
+//    // output  vector
+//    std::vector< std::pair<int, int> > output;
+//
+//    // Initialize reservoirs (R reservoirs of hash_power buckets,
+//    // each containing n_samples samples, each of them a vector)
+//    Reservoir reservoirs(n_hashes, 1, n_samples, clusters, total);
+//
+//    int idx = 0;
+//    do{
+//        VectorFeatures(data, vec, label, dimensions); //VectorFeatures?
+//        if (vec.size() == 0)continue;
+//
+//        // We are adding the labels instead of the actual vector for ease of analysis.
+//        labelvec.clear();
+//        labelvec.push_back(label);
+//        int* fake_hash = new int[n_hashes];
+//        for(size_t r = 0; r < n_hashes; r++)
+//            fake_hash[r] = 1;
+//        reservoirs.add(labelvec, fake_hash);
+//        idx++;
+//    }
+//    while(data);
+//
+//    for(size_t r = 0; r < n_hashes; r++){
+//        int clus = reservoirs.countLabels(r);
+//        int elem = reservoirs.countElements(r);
+//        output.push_back(std::make_pair(clus, elem));
+//    }
+////    reservoirs.pprint(std::cout, 3, true, clusters);
+//    return output;
+//}
+//
+//

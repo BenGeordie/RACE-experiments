@@ -21,10 +21,10 @@ typedef std::vector< std::pair< int, std::string > > reserve;
 class Reservoir
 {
 public:
-    Reservoir(size_t R, size_t range, size_t L, size_t total, const char* oldDir, std::string& newDir);
+    Reservoir(size_t R, size_t range, size_t L, size_t total);
     ~Reservoir();
     
-    void add(int label, int *hashes, std::string fileName);
+    void add(int label, int *hashes, std::string fastaEntry, std::ofstream& outputFasta);
     void clear();
     
     void pprint(std::ostream& outPath);
@@ -39,8 +39,6 @@ private:
     reserve _sample;
     std::set<int> _labelSet;
     int* _race;
-    std::string _old;
-    std::string _new;
     const uint8_t magic_number = 0x4D; // magic number for binary file IO
     const uint8_t file_version_number = 0x01; // file version number
 };
