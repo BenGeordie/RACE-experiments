@@ -16,7 +16,8 @@ int main(){
     
     using namespace std::chrono;
     
-    std::ifstream labelIn("/Users/benitogeordie/bg31/Research/Compression\ Project/promethion_kmeans_ground_truth.csv");
+//    std::ifstream labelIn("/Users/benitogeordie/bg31/Research/Compression\ Project/promethion_kmeans_ground_truth.csv");
+    std::ifstream labelIn("/Users/benitogeordie/Downloads/vboza-deepnano-e8a621e17b9f/r9/ERR353.fastq");
     std::ifstream in("/Users/benitogeordie/Downloads/vboza-deepnano-e8a621e17b9f/r9/promethion_basecalled.fasta");
     size_t n_exp = 1;
     std::string pathRACE = "/Users/benitogeordie/bg31/Research/Compression\ Project/promethion_after_race_minhash.txt";
