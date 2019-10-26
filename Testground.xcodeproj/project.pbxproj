@@ -32,6 +32,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		59465F172363619400DF583C /* Promethion_classified_experiments.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Promethion_classified_experiments.rtf; sourceTree = "<group>"; };
 		599002C22294AD4200EA7962 /* Debug.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Debug.cpp; sourceTree = "<group>"; };
 		59A8FF95228DD01000910C17 /* Testground */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Testground; sourceTree = BUILT_PRODUCTS_DIR; };
 		59A8FF98228DD01000910C17 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -88,6 +89,7 @@
 				59A8FF98228DD01000910C17 /* main.cpp */,
 				59C8D4DC22959B0B00FF7252 /* Include */,
 				59C8D4DD22959B6600FF7252 /* src */,
+				59465F172363619400DF583C /* Promethion_classified_experiments.rtf */,
 			);
 			path = Testground;
 			sourceTree = "<group>";
