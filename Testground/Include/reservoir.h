@@ -25,7 +25,7 @@ typedef int remainders;
 class Reservoir
 {
 public:
-    Reservoir(size_t R, size_t range, size_t threshold, std::vector<int>& clusters, size_t n_exp);
+    Reservoir(size_t R, size_t range, size_t threshold, size_t n_exp);
     ~Reservoir();
 
     void add(std::vector< double > vec, int *hashes);

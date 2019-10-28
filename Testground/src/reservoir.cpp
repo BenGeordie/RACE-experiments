@@ -2,7 +2,7 @@
 #include <ctime>
 #include <cstdlib>
 
-Reservoir::Reservoir(size_t R, size_t range, size_t threshold, std::vector<int>& clusters, size_t n_exp){
+Reservoir::Reservoir(size_t R, size_t range, size_t threshold, size_t n_exp){
     /* parameters:
      n_exp = number of experiments
      R = number of ACE repetitions
@@ -26,7 +26,9 @@ Reservoir::Reservoir(size_t R, size_t range, size_t threshold, std::vector<int>&
     // Set each counter to 0
     for (size_t n = 0; n < _n_exp; n++) {
         for (size_t r = 0; r < _R; r++) {
-            _counters[n * _R + r] = 0;
+            for (size_t ran = 0; ran < _range; ran++){
+                _counters[(n * _R * _range) + (r * _range) + ran] = 0;
+            }
         }
     }
 }
@@ -102,6 +104,23 @@ void Reservoir::pprint(std::ostream& out, std::string& path){
         std::cout << ", " << elemCountArrayForGraph[i];
     }
     std::cout << "]" << std::endl;
+    
+    
+    // Print counters
+//    for (size_t n = 0; n < _n_exp; n++) {
+//        std::cout << "Exp " << n << '\n';
+//        auto outer = n * _R * _range;
+//        for (size_t r = 0; r < _R; r++) {
+//            auto mid = r * _range;
+//            for (size_t ran = 0; ran < _range; ran++) {
+//                auto index = outer + mid + ran;
+//                std::cout << _counters[index] << ",";
+//            }
+//            std::cout << std::endl;
+//            std::cout << "----------------------------------------------------";
+//            std::cout << std::endl;
+//        }
+//    }
 }
 //
 //int Reservoir::count(){

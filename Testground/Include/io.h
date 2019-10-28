@@ -29,6 +29,8 @@ void VectorFeaturesFastaMurmur(std::istream& in, std::vector<int>& vec, std::ist
 
 void VectorFeaturesFasta(std::istream& in, std::vector<int>& vec, std::string& label, std::string& alphabet, int& k);
 
+void VectorFeaturesFastKraken(std::istream& in, std::vector<int>& vec, double& label, std::string& alphabet, int& k, std::string& fastWhat);
+
 void WriteCSVResults(std::ostream& out, size_t sketch_size, double preprocessing_time, double query_time, std::vector<double>& estimates); 
 /*
 Writes a CSV file row 
