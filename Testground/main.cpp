@@ -31,11 +31,11 @@ int main(){
 //        clusteringExpMinHashStream(n_hashes, 1, 1, labelIn, samples, clusters, pathRS, 1024, 3600);
     }
     for (size_t n_hashes : {3}) {
-        for(int hash_power=4; hash_power<5; ++hash_power){
+        for(int hash_power : {2}){
             for(size_t hash_range : {200}){
                 std::cout << "RACE" << std::endl;
                 std::cout << " R = " << n_hashes << " p = " << hash_power << " range = " << hash_range << '\n';
-                for(size_t threshold : {10}){
+                for(size_t threshold : {10, 20, 30, 40, 50}){
                     std::cout << "threshold = " << threshold << '\n';
 //                    std::cout << "Pretokenized" << '\n';
 //                    clusteringExpMinHashStream(n_hashes, hash_power, hash_range, labelIn, threshold, pathRACE, 1024, n_exp);
