@@ -2,7 +2,6 @@
 
 #include "io.h"
 #include "util.h"
-#include "RACE.h"
 #include "reservoir.h"
 
 #include "L2Hash.h"
@@ -35,18 +34,4 @@ struct ExperimentResult
     double query_time;
 };
 
-//ExperimentResult test_RACE(size_t n_hashes, size_t dimensions, int w, int hash_power, size_t hash_range, std::ifstream& data, std::ifstream& queries, std::vector<double>& estimates);
-
-std::vector<int> getWs();
-
-std::vector<int> getPowers();
-
-
-std::vector< std::pair<int, int> > clusteringExpMinHashStream(size_t n_hashes, int hash_power, size_t hash_range, std::ifstream& data, size_t threshold, std::string& path, size_t dimensions, size_t n_exp);
-
-std::vector< std::pair<int, int> > clusteringExpMinHashFastKraken(size_t n_hashes, int hash_power, size_t hash_range, std::ifstream& data, size_t threshold, std::string& path, size_t dimensions, size_t n_exp, std::string fastWhat, std::string alphabet, int k);
-
-// In the function below, the numbers printed in the console do not correspond to clusters, but instead to the read number in the fasta file (first read is labeled 0).
-std::vector< std::pair<int, int> > clusteringExpMinHashStreamMurmur(size_t n_exp, size_t n_hashes, int hash_power, size_t hash_range, std::ifstream& data, std::ifstream& labelIn, size_t n_samples_per_bucket, std::vector<int>& clusters, std::string& path, size_t dimensions, size_t total, int k);
-
-std::vector< std::pair<int, int> > RSExpStream(size_t n_hashes, std::ifstream& data, size_t n_samples, std::vector<int>& clusters, size_t dimensions, size_t total);
+void testRACEKrakenInput(size_t n_hashes, int hash_power, size_t hash_range, std::ifstream& data, size_t threshold, std::string& path, size_t dimensions, size_t n_exp, std::string fastWhat, std::string alphabet, int k, bool printCounters);

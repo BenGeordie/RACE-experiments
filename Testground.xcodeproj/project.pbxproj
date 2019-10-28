@@ -37,7 +37,6 @@
 		59A8FF95228DD01000910C17 /* Testground */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Testground; sourceTree = BUILT_PRODUCTS_DIR; };
 		59A8FF98228DD01000910C17 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		59C8D4D72295933800FF7252 /* Debug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Debug.h; sourceTree = "<group>"; };
-		59C8D4D822959A9C00FF7252 /* RACE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RACE.h; sourceTree = "<group>"; };
 		59C8D4D922959AC700FF7252 /* driver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = driver.h; sourceTree = "<group>"; };
 		59C8D4DA22959AD500FF7252 /* L2Hash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L2Hash.h; sourceTree = "<group>"; };
 		59C8D4DB22959AF100FF7252 /* reservoir.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = reservoir.h; sourceTree = "<group>"; };
@@ -98,7 +97,6 @@
 			isa = PBXGroup;
 			children = (
 				59C8D4D72295933800FF7252 /* Debug.h */,
-				59C8D4D822959A9C00FF7252 /* RACE.h */,
 				59C8D4D922959AC700FF7252 /* driver.h */,
 				59C8D4F12295D56200FF7252 /* MinHash.h */,
 				59C8D4DB22959AF100FF7252 /* reservoir.h */,

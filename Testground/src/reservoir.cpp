@@ -67,7 +67,7 @@ void Reservoir::clear(){
     memset(_counters, 0, _n_exp*_R*_range*sizeof(*_counters));
 }
 
-void Reservoir::pprint(std::ostream& out, std::string& path){
+void Reservoir::pprint(std::ostream& out, std::string& path, bool printCounters){
     std::ofstream out_data(path);
     std::vector<size_t> clusterCountArrayForGraph;
     std::vector<size_t> elemCountArrayForGraph;
@@ -107,61 +107,20 @@ void Reservoir::pprint(std::ostream& out, std::string& path){
     
     
     // Print counters
-//    for (size_t n = 0; n < _n_exp; n++) {
-//        std::cout << "Exp " << n << '\n';
-//        auto outer = n * _R * _range;
-//        for (size_t r = 0; r < _R; r++) {
-//            auto mid = r * _range;
-//            for (size_t ran = 0; ran < _range; ran++) {
-//                auto index = outer + mid + ran;
-//                std::cout << _counters[index] << ",";
-//            }
-//            std::cout << std::endl;
-//            std::cout << "----------------------------------------------------";
-//            std::cout << std::endl;
-//        }
-//    }
+    if (printCounters) {
+        for (size_t n = 0; n < _n_exp; n++) {
+            std::cout << "Exp " << n << '\n';
+            auto outer = n * _R * _range;
+            for (size_t r = 0; r < _R; r++) {
+                auto mid = r * _range;
+                for (size_t ran = 0; ran < _range; ran++) {
+                    auto index = outer + mid + ran;
+                    std::cout << _counters[index] << ",";
+                }
+                std::cout << std::endl;
+                std::cout << "----------------------------------------------------";
+                std::cout << std::endl;
+            }
+        }
+    }
 }
-//
-//int Reservoir::count(){
-//    int clusters = 0;
-//    for (size_t r = 0; r < _R; r++){
-//        // For each bucket (displayed as a row)
-//        for (size_t i = 0; i < (_range+1); i++){
-//            if (_buckets[r*(_range+1) + i][0][0] > 10 /*&& _buckets[r*_range + i][0][0] < 1000*/){
-//                clusters++;
-//            }
-//        }
-//    }
-//    return clusters;
-//}
-//
-//int Reservoir::countLabels(size_t& r){
-////    std::cout << "THE R VALUE IS : " << r << std::endl << std::flush;
-//    std::vector<int> labels;
-//    int n;
-//    // For each bucket (displayed as a row)
-//    for (size_t i = 0; i < (_range+1); i++){
-//        size_t lim = _L;
-//        if(i == _range){
-//            lim = _rems[r];
-//        }
-//        for (size_t j = 0; j < _buckets[r*(_range+1) + i][0][0] && j < lim; j++){ //_buckets[r*_range + i][0][0] shows number of elements in bucket.
-//            n = _buckets[r * (_range+1) + i][j+1][0]; // +1 for offset
-//            std::vector<int>::iterator it = std::find(labels.begin(), labels.end(), n);
-//            if(it == labels.end())
-////                std::cout << "n : " << n << std::endl << std::flush;
-//                labels.push_back(n);
-//        }
-//    }
-//    return labels.size();
-//}
-//
-//int Reservoir::countElements(size_t& r){
-//    int elements = 0;
-//    // For each bucket (displayed as a row)
-//    for (size_t i = 0; i < (_range+1); i++){
-//        elements += _buckets[r*(_range+1) + i].size() - 1;
-//    }
-//    return elements;
-//}
