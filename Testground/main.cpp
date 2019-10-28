@@ -17,9 +17,10 @@ int main(){
     using namespace std::chrono;
     
 //    std::ifstream labelIn("/Users/benitogeordie/bg31/Research/Compression\ Project/promethion_kmeans_ground_truth.csv");
-    std::ifstream labelIn("/Users/benitogeordie/Downloads/vboza-deepnano-e8a621e17b9f/r9/ERR353.fastq");
+//    std::ifstream labelIn("/Users/benitogeordie/bg31/Research/Compression Project/promethion_classified_token_vectors_k5_taxid.csv");
+    std::ifstream labelIn("/Users/benitogeordie/bg31/Research/Compression Project/SRR1056036_token_vectors_k5.csv");
     std::ifstream in("/Users/benitogeordie/Downloads/vboza-deepnano-e8a621e17b9f/r9/promethion_basecalled.fasta");
-    size_t n_exp = 1;
+    size_t n_exp = 50;
     std::string pathRACE = "/Users/benitogeordie/bg31/Research/Compression\ Project/promethion_after_race_minhash.txt";
     std::string pathRS = "/Users/benitogeordie/bg31/Research/Compression\ Project/promethion_after_rs.txt";
     //    std::cout << "RS:" << std::endl;
@@ -32,9 +33,9 @@ int main(){
         for(int hash_power=4; hash_power<5; ++hash_power){
             for(size_t hash_range : {200}){
                 std::cout << "RACE" << std::endl;
-                std::cout << " p = " << hash_power << " range = " << hash_range << '\n';
-                for(size_t threshold = 11; threshold < 12; ++threshold){
-                    clusteringExpMinHashStream(n_hashes, hash_power, hash_range, labelIn, threshold, clusters, pathRACE, 1024, 10);
+                std::cout << " R = " << n_hashes << " p = " << hash_power << " range = " << hash_range << '\n';
+                for(size_t threshold : {10, 20, 30, 40, 50, 60, 70, 80, 90}){
+                    clusteringExpMinHashStream(n_hashes, hash_power, hash_range, labelIn, threshold, clusters, pathRACE, 1024, n_exp);
                     //                clusteringExpMinHashStreamMurmur(n_hashes, hash_power, hash_range, in, labelIn, n_samples_per_bucket, clusters, pathRACE, 1024, n_samples_per_bucket*100, 6);
                 }
             }
