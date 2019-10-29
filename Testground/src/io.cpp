@@ -8,8 +8,8 @@ void kmerize(std::string sequence, std::vector<int>& vec, std::string alphabet, 
 // Kmerize produces a vector that contains the numbers of the tokens. This means that we need to know what the numbers are. This means we need to  calculate it, and we need to know what k is. Right we need to k to kmerize in the first place. We need to know the size of alphabet used in sequence. E.g. this one is 21??
 // Then go through string from idx of 0 to len(sequence) - k. Then look at substring. i 0 to <size. alphabetsize^i + position in the alphabet. Maybe I can pass a string of the alphabet. then use find to get the index and use this for numbering.
 
-    #pragma omp parallel for
     auto alpha_size = alphabet.size();
+    #pragma omp parallel for
     for(int i=0; i < sequence.length() - k + 1; ++i){
         std::string kmer;
         int tokenNum = 0;

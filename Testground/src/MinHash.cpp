@@ -28,6 +28,7 @@ int* MinHash::getHash(std::vector<int>& vec){
 }
 
 void MinHash::getHash(std::vector<int>& vec, int* hashes){
+    // getHash(size_t k, std::string& sequence, int* hashes)
     // hashes had better be pre-allocated to _numhashes!! 
     // I do this because this is faster in a loop 
 
