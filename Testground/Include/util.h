@@ -7,6 +7,7 @@
 #include <vector>
 
 #include <math.h>
+#include <algorithm>
 
 #include "MurmurHash.h"
 
@@ -23,4 +24,11 @@ double L2Distance(const std::vector<double>& x, const std::vector<double>& y);
 double L2Norm(const std::vector<double>& x); 
 
 void rehash(int* input_hashes, int* output_hashes, int nhashes, int values_per_set); 
+
+double EditDistance(const std::string &s1, const std::string &s2); 
+double HammingDistance(const std::string &s1, const std::string &s2); 
+double JaccardDistance(const std::string &s1, const std::string &s2, int k); 
+
+
+
 
