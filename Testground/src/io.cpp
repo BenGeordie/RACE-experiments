@@ -42,6 +42,49 @@ void kmerize(std::string sequence, std::vector<int>& vec, std::string alphabet, 
 //    }
 }
 
+
+bool KrakenSequenceFeatures(std::istream& in, std::string& sequence, int& label, std::string fastWhat){
+    int interval; 
+    char begin; 
+    if (fastWhat == "fasta") {
+        interval = 2;
+        begin = '>';
+    } else if (fastWhat == "fastq") {
+        interval = 4;
+        begin = '@';
+    } else {
+        std::cerr<<"Unsupported file type: "<<fastWhat<<std::endl; 
+        return false; // unsupported file type
+    }
+
+    int current = 0; 
+    std::string labelTemp;
+    std::getline(in, labelTemp);
+    if (labelTemp.length() > 0 && labelTemp.at(0) == begin) {
+        std::size_t start = labelTemp.find("taxid|")+6; // .find method finds index of the space before cluster name in uniref. So add 1 to get index of start of cluster name.
+        labelTemp = labelTemp.substr(start, labelTemp.length());
+    }
+    std::stringstream ss(labelTemp);
+    ss >> label;
+    current += 1;
+    // Parsing the sequence, pass to kmerize
+    sequence = ""; 
+    std::string temp;
+    // Get current position
+    
+    while(current != 0 && in) {
+        //std::cout << "peek" << in.peek() << std::endl;
+        std::getline(in, temp); // each vector occupies a single line.
+        if (current == 1 && temp.size() != 0) {
+            sequence += temp;
+        }
+        current = (current + 1) % interval;
+    }
+    return true; 
+}
+
+
+
 void VectorFeaturesFastKraken(std::istream& in, std::vector<int>& vec, double& label, std::string& alphabet, int& k, std::string& fastWhat) {
     int interval;
     char begin;

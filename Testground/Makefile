@@ -5,7 +5,7 @@
 CXX = /usr/local/Cellar/gcc/9.1.0/bin/g++-9
 CFLAGS = -O3 -std=c++11 -fopenmp
 
-SRCS = Debug.cpp SignedRandomProjections.cpp L2Hash.cpp MinHash.cpp driver.cpp io.cpp MurmurHash.cpp reservoir.cpp util.cpp 
+SRCS = Debug.cpp SequenceMinHash.cpp SignedRandomProjections.cpp L2Hash.cpp MinHash.cpp driver.cpp io.cpp MurmurHash.cpp reservoir.cpp util.cpp RACE.cpp 
 SRCS_DIR = src/
 
 BUILD_DIR = build/
