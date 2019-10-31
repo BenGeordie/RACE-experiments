@@ -7,7 +7,7 @@ output_file = sys.argv[2]
 title = sys.argv[3]
 with open(input_file) as file:
     with open(output_file, "a") as out:
-        out.write(title)
+        out.write(title + '\n')
         total = 0.0
 
         # build out mapping of taxon id to quantity
