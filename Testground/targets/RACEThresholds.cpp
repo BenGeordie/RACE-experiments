@@ -49,10 +49,12 @@ int main(int argc, char **argv){
     RACE sketch = RACE(race_repetitions,race_range); 
 
     do{
+        auto start = std::chrono::high_resolution_clock::now();
         bool success = KrakenSequenceFeatures(datastream, sequence, label, "fastq");
         if (!success) continue;
         // std::cout<<label<<":\t"<<sequence<<std::endl;
 
+        // auto start = std::chrono::high_resolution_clock::now();
         // begin timing here: 
 
         hash.getHash(kmer_k, sequence, raw_hashes); 
@@ -70,6 +72,9 @@ int main(int argc, char **argv){
             samplestream<<sequence; 
             samplestream<<std::endl; 
         }
+        auto finish = std::chrono::high_resolution_clock::now();
+        std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(finish-start).count() << ",";
+
 
     }
     while(datastream);

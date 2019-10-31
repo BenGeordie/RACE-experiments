@@ -57,8 +57,10 @@ int main(int argc, char **argv){
     // ridiculously ad-hoc implementation of reservoir sampling
     int i = 0;
     do{
+        auto start = std::chrono::high_resolution_clock::now();
         bool success = KrakenSequenceFeatures(datastream, sequence, label, "fastq");
         if (!success) continue;
+
 
         if (i < n_samples){
                 sequences.push_back(sequence);
@@ -71,12 +73,15 @@ int main(int argc, char **argv){
                 labels[j] = label; 
             }
         }
+        auto finish = std::chrono::high_resolution_clock::now();
+        std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(finish-start).count() << ",";
+
         i++;
     }
     while(datastream);
 
 
-    for(int i = 0; i < n_samples; i++){
+    for(int i = 0; i < sequences.size(); i++){
         samplestream<<labels[i];
         samplestream<<'\t';
         samplestream<<sequences[i]; 
