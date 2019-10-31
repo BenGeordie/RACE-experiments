@@ -17,15 +17,18 @@ with open(input_file) as file:
             tax_ids[label] += 1.0
             total += 1.0
 
+        # write number of samples in output.
+        out.write("Number of samples: " + str(int(total)) + '\n')
+
         # write number of unique taxons to file.
-        out.write("Number of taxons: " + str(len(tax_ids)))
+        out.write("Number of taxons: " + str(len(tax_ids)) + '\n')
 
         # calculate simpson index then write to file.
         numerator = sum([n * (n - 1) for n in tax_ids.values()])
         denominator = total * (total - 1)
         simpson = 1 - (float(numerator) / float(denominator))
-        out.write("Simpson Diversity Index: " + str(simpson))
+        out.write("Simpson Diversity Index: " + str(simpson) + '\n')
 
         # calculate shannon index then write to file.
         shannon = -1 * sum((n/total) * math.log(n/total) for n in tax_ids.values())
-        out.write("Shannon Diversity Index: " + str(simpson))
+        out.write("Shannon Diversity Index: " + str(shannon) + '\n')
