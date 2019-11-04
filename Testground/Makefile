@@ -2,7 +2,7 @@
 # To make tests: make tests 
 # To make all experiment binaries: make binaries
 
-CXX = /usr/local/Cellar/gcc/9.1.0/bin/g++-9
+CXX = /usr/local/Cellar/gcc/9.2.0_1/bin/g++-9
 CFLAGS = -O3 -std=c++11 -fopenmp
 
 SRCS = Debug.cpp SequenceMinHash.cpp SignedRandomProjections.cpp L2Hash.cpp MinHash.cpp driver.cpp io.cpp MurmurHash.cpp reservoir.cpp util.cpp RACE.cpp 
