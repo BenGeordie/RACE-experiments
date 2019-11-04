@@ -90,7 +90,9 @@ int main(int argc, char **argv){
 
     // ridiculously ad-hoc implementation of greedy kcenter sampling
     int i = 0;
+    auto all_start = std::chrono::high_resolution_clock::now();
     do{
+        auto start = std::chrono::high_resolution_clock::now();
         bool success = KrakenSequenceFeatures(datastream, sequence, label, "fastq");
         if (!success) continue;
 
@@ -134,10 +136,14 @@ int main(int argc, char **argv){
             window_labels[index] = label; 
             window_sequences[index] = sequence; 
         }
+        auto finish = std::chrono::high_resolution_clock::now();
+        std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(finish-start).count() << ",";
    
         i++;
         if (i%1000==0)
             std::clog<<'.'<<std::flush;
     }
     while(datastream);
+    auto all_finish = std::chrono::high_resolution_clock::now();
+    std::clog <<"Processed "<<i<<" sequences in "<< std::chrono::duration_cast<std::chrono::seconds>(all_finish-all_start).count()<<" seconds";
 }

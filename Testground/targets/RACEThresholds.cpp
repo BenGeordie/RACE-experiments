@@ -48,6 +48,8 @@ int main(int argc, char **argv){
 
     RACE sketch = RACE(race_repetitions,race_range); 
 
+    int i = 0; 
+    auto all_start = std::chrono::high_resolution_clock::now();
     do{
         auto start = std::chrono::high_resolution_clock::now();
         bool success = KrakenSequenceFeatures(datastream, sequence, label, "fastq");
@@ -74,8 +76,11 @@ int main(int argc, char **argv){
         }
         auto finish = std::chrono::high_resolution_clock::now();
         std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(finish-start).count() << ",";
-
-
+        i++; 
     }
     while(datastream);
+
+    auto all_finish = std::chrono::high_resolution_clock::now();
+    std::clog <<"Processed "<<i<<" sequences in "<< std::chrono::duration_cast<std::chrono::seconds>(all_finish-all_start).count()<<" seconds";
+
 }

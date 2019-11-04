@@ -54,6 +54,8 @@ int main(int argc, char **argv){
     std::vector< std::string > sequences;
     std::vector< int > labels;
 
+    auto all_start = std::chrono::high_resolution_clock::now();
+
     // ridiculously ad-hoc implementation of reservoir sampling
     int i = 0;
     do{
@@ -79,6 +81,9 @@ int main(int argc, char **argv){
         i++;
     }
     while(datastream);
+
+    auto all_finish = std::chrono::high_resolution_clock::now();
+    std::clog <<"Processed "<<i<<" sequences in "<< std::chrono::duration_cast<std::chrono::seconds>(all_finish-all_start).count()<<" seconds";
 
 
     for(int i = 0; i < sequences.size(); i++){
