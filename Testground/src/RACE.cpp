@@ -36,6 +36,23 @@ void RACE::add(int *hashes){
 	}
 }
 
+double RACE::query_and_add(int *hashes){
+	/* 
+	Input: A set of R integer hash values, one hash value for each ACE repetition
+	Performs: Update to RACE array
+	Returns: query value of RACE array 
+	*/
+	double mean = 0; 
+	for (size_t r = 0; r < _R; r++){
+		size_t index = hashes[r] % _range; 
+		mean = mean + _sketch[r*_range + index]; 
+		_sketch[r*_range + index] = _sketch[r*_range + index] + 1; 
+	}
+	mean = mean / _R; 
+	return mean; 
+}
+
+
 void RACE::subtract(int *hashes){
 	/*
 	Input: A set of R integer hash values, one hash value for each ACE repetition

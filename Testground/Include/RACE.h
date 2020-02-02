@@ -14,6 +14,7 @@ public:
     ~RACE(); 
 
     void add(int *hashes); 
+    double query_and_add(int *hashes); 
     void subtract(int *hashes); 
     void clear(); 
 
@@ -24,7 +25,6 @@ public:
 
     void pprint(std::ostream& out, int width = 3, bool format = true); 
     
-
     size_t max_counter(); 
     void delta_unzip(const size_t dataset_size); 
     void delta_zip(); 
