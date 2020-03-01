@@ -1,0 +1,10 @@
+The PromethION dataset that we used in the experiments section 
+of our paper can be retrieved from the European Nucleotide 
+Archive website at https://www.ebi.ac.uk/ena/data/view/ERR3152367.
+
+The dataset will come in FASTQ format. To classify the sequences 
+into their respective taxa, run Kraken2 on this dataset with the 
+--classified-out flag.
+
+Instructions on installing and running Kraken can be found here:
+https://ccb.jhu.edu/software/kraken2/index.shtml?t=manual.

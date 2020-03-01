@@ -1,0 +1,36 @@
+In this repository, we provide implementations of RACE that are 
+specifically used for experimental purposes, bash scripts for
+some of the experiments that we ran, and a metagenomic dataset.
+
+RACE IMPLEMENTATIONS:
+RACETresholds and RACEMulti. The source code can be found under
+the "targets" directory. The binaries can be found under the 
+"bin" directory.
+
+DATASETS
+We provide a metagenomic dataset sequenced using PromethION.
+However, due to its large size, we were not able to upload it 
+to this repository. We instead provide download instructions
+under "data/PromethION_ERR3152367_DownloadInstructions.txt".
+The dataset will come in FASTQ format. To classify the sequences 
+into their respective taxa, run Kraken2 on this dataset with the 
+--classified-out flag.
+
+EXPERIMENT BASH SCRIPTS:
+We provide scripts for both Diginorm and RACE experiments for the 
+provided dataset under the "experiment_scripts" directory. There 
+are two Diginorm scripts for the PromethION dataset: 
+promethion_digi_optimal and promethion_digi_low_memory. As the 
+names suggest, they are the optimal and low_memory runs of 
+Diginorm on the PromethION dataset respectively. Note that the 
+low_memory experiment cannot complete – this is provided to 
+showcase RACE's advantage in low-memory environments. Since the 
+FASTQ file for the PromethION dataset is not provided, we have 
+left the input file path blank in the PromethION bash scripts.
+
+KRAKEN2
+Instructions on installing and running Kraken can be found here:
+https://ccb.jhu.edu/software/kraken2/index.shtml?t=manual.
+
+
+
